@@ -31,3 +31,4 @@ C:\Users\Oscar\Documents\Curso\ASP.NET Core\Asp.NET 8 Web API & Entity Framework
 C:\Users\Oscar\Documents\Curso\ASP.NET Core\Asp.NET 8 Web API & Entity Framework - Full CRUD\New Course - ASP.Net-Core-Web-API-.Net-8.git\api\obj\Debug\net8.0\api.pdb
 C:\Users\Oscar\Documents\Curso\ASP.NET Core\Asp.NET 8 Web API & Entity Framework - Full CRUD\New Course - ASP.Net-Core-Web-API-.Net-8.git\api\obj\Debug\net8.0\api.genruntimeconfig.cache
 C:\Users\Oscar\Documents\Curso\ASP.NET Core\Asp.NET 8 Web API & Entity Framework - Full CRUD\New Course - ASP.Net-Core-Web-API-.Net-8.git\api\obj\Debug\net8.0\ref\api.dll
+C:\Users\Oscar\Documents\Curso\ASP.NET Core\Asp.NET 8 Web API & Entity Framework - Full CRUD\New Course - ASP.Net-Core-Web-API-.Net-8.git\api\obj\Debug\net8.0\api.sourcelink.json
