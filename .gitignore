@@ -2,3 +2,6 @@
 /api/appsettings.Development.json
 obj
 bin
+/api/.vs/api/v17
+/api/.vs/api/FileContentIndex
+/api
