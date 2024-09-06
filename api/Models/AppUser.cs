@@ -8,6 +8,7 @@ namespace api.Models
 {
     public class AppUser : IdentityUser
     {
-        
+        //navigation property for relation many-to-many
+        public List<Portfolio> Portfolios { get; set; } = new List<Portfolio>();
     }
 }
