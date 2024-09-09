@@ -16,5 +16,8 @@ namespace api.Models
         public int? StockId { get; set; }
         //Navigation property
         public Stock? Stock { get; set; }
+        //onte-to-one
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }
