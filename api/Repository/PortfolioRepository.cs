@@ -26,7 +26,7 @@ namespace api.Repository
             return portfolio;
         }
 
-        public async Task<Portfolio> DeleteAsync(AppUser appuser, string symbol)
+        public async Task<Portfolio?> DeleteAsync(AppUser appuser, string symbol)
         {
             var portfolioModel = await _context.Portfolios.FirstOrDefaultAsync(x => x.AppUserId == appuser.Id && x.Stock.Symbol.ToLower() == symbol.ToLower());
 
