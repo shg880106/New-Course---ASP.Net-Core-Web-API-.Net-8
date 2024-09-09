@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.Dtos.Stock;
 using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -25,7 +26,7 @@ namespace api.Repository
             return portfolio;
         }
 
-        public async Task<Portfolio> DeleteAsync(AppUser appuser, string symbol)
+        public async Task<Portfolio?> DeleteAsync(AppUser appuser, string symbol)
         {
             var portfolioModel = await _context.Portfolios.FirstOrDefaultAsync(x => x.AppUserId == appuser.Id && x.Stock.Symbol.ToLower() == symbol.ToLower());
 
