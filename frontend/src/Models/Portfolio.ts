@@ -1,7 +1,7 @@
 export type PortfolioGet = {
   id: number;
   symbol: string;
-  companyName: string;
+  comnayName: string;
   purchase: number;
   lastDiv: number;
   industry: string;

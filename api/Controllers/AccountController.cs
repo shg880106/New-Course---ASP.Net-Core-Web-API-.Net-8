@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using api.Dtos.Account;
 using api.Interfaces;
 using api.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -97,6 +99,14 @@ namespace api.Controllers
             {
                 return StatusCode(500, e);                
             }
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+            return NoContent(); // Redirect to Home page after logout
         }
     }
 }

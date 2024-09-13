@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { UserProfile } from "../Models/User";
 import { useNavigate } from "react-router-dom";
-import { loginAPI, registerAPI } from "../Services/AuthService";
+import { loginAPI, registerAPI, logoutAPI} from "../Services/AuthService";
 import { toast } from "react-toastify";
 import React from "react";
 import axios from "axios";
@@ -26,15 +26,26 @@ export const UserProvider = ({ children }: Props) => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
-    if (user && token) {
-      setUser(JSON.parse(user));
-      setToken(token);
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+    // Retrieve user and token from localStorage on component mount
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
+  
+    if (storedUser && storedToken) {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + storedToken;
+      setUser(JSON.parse(storedUser));
+      setToken(storedToken);
+    } else {
+      delete axios.defaults.headers.common["Authorization"];
     }
+
+  
+    // Set or clear axios default Authorization header based on token state
+    if (storedToken) {
+    } else {
+    }
+  
     setIsReady(true);
-  }, []);
+  }, [token]); // Dependency array: runs whenever 'token' state changes
 
   const registerUser = async (
     email: string,
@@ -71,8 +82,9 @@ export const UserProvider = ({ children }: Props) => {
           localStorage.setItem("user", JSON.stringify(userObj));
           setToken(res?.data.token!);
           setUser(userObj!);
-          toast.success("Login Success!");
+          toast.success("Login Success!");          
           navigate("/search");
+          // window.location.reload();
         }
       })
       .catch((e) => toast.warning("Server error occured"));
@@ -82,12 +94,13 @@ export const UserProvider = ({ children }: Props) => {
     return !!user;
   };
 
-  const logout = () => {
+  const logout = async () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
     setToken("");
     navigate("/");
+    await logoutAPI();
   };
 
   return (

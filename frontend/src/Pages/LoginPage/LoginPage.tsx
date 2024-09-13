@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../Context/useAuth";
@@ -11,10 +11,14 @@ type LoginFormsInputs = {
   password: string;
 };
 
+//manejar la validacion
 const validation = Yup.object().shape({
   userName: Yup.string().required("Username is required"),
   password: Yup.string().required("Password is required"),
 });
+
+//para mostrar el password
+
 
 const LoginPage = (props: Props) => {
   const { loginUser } = useAuth();
@@ -26,7 +30,15 @@ const LoginPage = (props: Props) => {
 
   const handleLogin = (form: LoginFormsInputs) => {
     loginUser(form.userName, form.password);
+    
   };
+
+  const [passwordVisible, setPasswordVisible] = useState(false); // State to control password visibility
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+    
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -66,13 +78,31 @@ const LoginPage = (props: Props) => {
                 >
                   Password
                 </label>
-                <input
+                
+                {/* <input
                   type="password"
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   {...register("password")}
+                /> */}
+
+                <input
+                  type={passwordVisible ? 'text' : 'password'} // Toggle between 'text' and 'password' type
+                  placeholder="Enter your password"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
+                <span onClick={togglePasswordVisibility}
+                  style={{
+                    position: 'absolute',
+                    transform: 'translateY(20%)',
+                    cursor: 'pointer',
+                    fontSize: '18px',
+                  }}
+                >
+                  {passwordVisible ? '🙈' : '👁️'}
+                </span>  
+                
                 {errors.password ? (
                   <p className="text-white">{errors.password.message}</p>
                 ) : (

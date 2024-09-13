@@ -12,10 +12,13 @@ import {
   portfolioGetAPI,
 } from "../../Services/PortfolioService";
 import { toast } from "react-toastify";
+import { useAuth } from "../../Context/useAuth";
 
 interface Props {}
 
 const SearchPage = (props: Props) => {
+  
+  const { token } = useAuth(); // Access token from UserContext
   const [search, setSearch] = useState<string>("");
   const [portfolioValues, setPortfolioValues] = useState<PortfolioGet[] | null>(
     []
@@ -23,9 +26,13 @@ const SearchPage = (props: Props) => {
   const [searchResult, setSearchResult] = useState<CompanySearch[]>([]);
   const [serverError, setServerError] = useState<string | null>(null);
 
+  // Effect to set axios authorization header whenever the token changes
   useEffect(() => {
-    getPortfolio();
-  }, []);
+    if (token) {
+      // Set the authorization header for all axios requests
+      getPortfolio();
+    }
+  }, [token]); // Dependency array includes 'token'
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -60,7 +67,7 @@ const SearchPage = (props: Props) => {
   const onPortfolioDelete = (e: any) => {
     e.preventDefault();
     portfolioDeleteAPI(e.target[0].value).then((res) => {
-      if (res?.status == 200) {
+      if (res?.status === 200) {
         toast.success("Stock deleted from portfolio!");
         getPortfolio();
       }
